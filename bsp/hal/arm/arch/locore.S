@@ -145,7 +145,7 @@ ENTRY(reset_entry)
 	mov	r0, #0x1e
 1:
 	str	r0, [r1], #4
-	add	r0, r0, #0x1000
+	add	r0, r0, #0x400
 	teq	r1, r2
 	bne	1b
 
