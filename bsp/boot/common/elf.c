@@ -218,10 +218,12 @@ relocate_section_rel(Elf32_Sym *sym_table, Elf32_Rel *rel,
 				+ sym->st_value;
 			if (relocate_rel(rel, sym_val, target_sect) != 0)
 				return -1;
+/*
 		} else if (ELF32_ST_BIND(sym->st_info) != STB_WEAK) {
 			DPRINTF(("Undefined symbol for rel[%x] sym=%lx\n",
 				 i, (long)sym));
 			return -1;
+*/
 		} else {
 			DPRINTF(("Undefined weak symbol for rel[%x]\n", i));
 		}

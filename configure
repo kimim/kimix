@@ -192,6 +192,9 @@ settools()
 		ppc)
 			prefix="powerpc-elf-"
 			;;
+                arm)
+                        prefix="$arch-eabi-"
+                        ;;
 		*)
 			prefix="$arch-elf-"
 			;;

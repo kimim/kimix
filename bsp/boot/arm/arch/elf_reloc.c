@@ -41,6 +41,7 @@ relocate_rel(Elf32_Rel *rel, Elf32_Addr sym_val, char *target_sect)
 
 	switch (ELF32_R_TYPE(rel->r_info)) {
 	case R_ARM_NONE:
+        case R_ARM_V4BX:
 		break;
 	case R_ARM_ABS32:
 		*where += (vaddr_t)ptokv(sym_val);
