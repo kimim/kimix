@@ -70,7 +70,7 @@ execve(const char *path, char * const *argv, char * const *envp)
 	argc = 0;
 	if (argv) {
             /* workaround to avoid visit out of bound of argv */
-                while (argc < 2) {
+                while (argv[argc]) {
 			bufsz += (strlen(argv[argc]) + 1);
 			argc++;
 		}
