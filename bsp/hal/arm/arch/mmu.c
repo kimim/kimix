@@ -117,7 +117,6 @@ mmu_map(pgd_t pgd, paddr_t pa, vaddr_t va, size_t size, int type)
 	pa = round_page(pa);
 	va = round_page(va);
 	size = trunc_page(size);
-
 	/*
 	 * Set page flag
 	 */
@@ -164,7 +163,12 @@ mmu_map(pgd_t pgd, paddr_t pa, vaddr_t va, size_t size, int type)
 		}
 		/* Set new entry into page table */
 		pte[PAGE_TABLE(va)] = (uint32_t)pa | pte_flag;
-
+                if(((uint32_t)(&pte[PAGE_TABLE(va)]) & 0xfff00000) == 0x80000000)
+                {
+                    pte[PAGE_TABLE(va)+1] = (uint32_t)pa | pte_flag;
+                    pte[PAGE_TABLE(va)+2] = (uint32_t)pa | pte_flag;
+                    pte[PAGE_TABLE(va)+3] = (uint32_t)pa | pte_flag;
+                }
 		/* Process next page */
 		pa += PAGE_SIZE;
 		va += PAGE_SIZE;
@@ -236,7 +240,6 @@ void
 mmu_switch(pgd_t pgd)
 {
 	paddr_t phys = kvtop(pgd);
-
 	if (phys != get_ttb())
 		switch_ttb(phys);
 }
@@ -312,7 +315,9 @@ mmu_init(struct mmumap *mmumap_table)
 			map_type = PG_IOMEM;
 			break;
 		}
-
+                /* skip re-map SYSTEM pages */
+                if(map_type == PG_SYSTEM)
+                    continue;
 		if (mmu_map(boot_pgd, map->phys, map->virt,
 			    map->size, map_type))
 			panic("mmu_init");

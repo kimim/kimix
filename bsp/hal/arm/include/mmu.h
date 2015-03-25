@@ -60,7 +60,7 @@ typedef uint32_t	*pte_t;		/* page table entry */
  *  Virtual and physical address translation
  */
 #define PAGE_DIR(virt)      (int)((((vaddr_t)(virt)) >> 20) & 0xfff)
-#define PAGE_TABLE(virt)    (int)((((vaddr_t)(virt)) >> 12) & 0xff)
+#define PAGE_TABLE(virt)    (int)((((vaddr_t)(virt)) >> 10) & 0x3ff)
 
 #define pte_present(pgd, virt)  (pgd[PAGE_DIR(virt)] & PDE_PRESENT)
 

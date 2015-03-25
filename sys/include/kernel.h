@@ -44,12 +44,12 @@
 
 #define __s(x) __STRING(x)
 
-#define HOSTNAME	"Preky"
+#define HOSTNAME	"Kimim"
 #define PROFILE		__s(CONFIG_PROFILE)
 #define MACHINE		__s(CONFIG_MACHINE)
 #define VERSION		__s(MAJORVERSION) "." __s(MINORVERSION) "." __s(PATCHLEVEL)
 
-#define BANNER		"Prex version " VERSION PROFILE " for " MACHINE \
+#define BANNER		"Kimix version " VERSION PROFILE " for " MACHINE \
 			" ("__DATE__ ")\n" \
 			"Copyright (c) 2005-2009 Kohsuke Ohtani\n"
 
