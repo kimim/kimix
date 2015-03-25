@@ -466,30 +466,6 @@ task_info(struct taskinfo *info)
 	return ESRCH;
 }
 
-void
-_dump_task(task_t task)
-{
-    printf("Dump of task: %s\n", task->name);
-    printf("    parent task: %s\n", task->parent->name);
-    printf("    vm_map: head   0x%x\n", task->map->head);
-    printf("    vm_map: refcnt 0x%x\n", task->map->refcnt);
-    printf("    vm_map: pgd    0x%x\n", task->map->pgd);
-    printf("    vm_map: size   0x%x\n", task->map->total);
-}
-void
-_dump_module(struct module *mod)
-{
-    printf("Dump of module:     %s\n", mod->name);
-    printf("    phys            0x%x\n", mod->phys);
-    printf("    size            0x%x\n", mod->size);
-    printf("    entry           0x%x\n", mod->entry);
-    printf("    text            0x%x\n", mod->text);
-    printf("    data            0x%x\n", mod->data);
-    printf("    textsz          0x%x\n", mod->textsz);
-    printf("    datasz          0x%x\n", mod->datasz);
-    printf("    bsssz           0x%x\n", mod->bsssz);
-}
-
 /*
  * Create and setup boot tasks.
  */
@@ -511,8 +487,6 @@ task_bootstrap(void)
 		 */
 		if ((error = task_create(&kernel_task, VM_NEW, &task)) != 0)
 			break;
-                _dump_task(task);
-                _dump_module(mod);
 
 		if ((error = vm_load(task->map, mod, &stack)) != 0)
 			break;
