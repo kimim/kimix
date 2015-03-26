@@ -209,7 +209,7 @@ printentry(char *name, struct stat *sp)
 		printf("  1 ");
 
 		/* print owner */
-		printf("prex   ");
+		printf("kimix   ");
 
 		/* print date/time */
 		printf("%s 12:00 ", __DATE__);
