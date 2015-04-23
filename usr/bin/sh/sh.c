@@ -103,9 +103,11 @@ showprompt(void)
 {
 	static char cwd[PATH_MAX];
 	static char prompt[PATH_MAX+20];
+	struct utsname uts;
 
 	getcwd(cwd, PATH_MAX);
-	sprintf(prompt, "\033[32m[kimix:%s]\033[0m# ", cwd);
+	uname(&uts);
+	sprintf(prompt, "\033[32m[%s:%s]\033[0m# ", uts.sysname, cwd);
 	write(1, prompt, strlen(prompt));
 }
 

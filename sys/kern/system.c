@@ -46,7 +46,7 @@
 static char	infobuf[MAXINFOSZ];	/* common information buffer */
 
 static const struct kerninfo kerninfo = {
-	"Kimix",	HOSTNAME, VERSION, __DATE__, MACHINE
+	"kimix",	HOSTNAME, VERSION, __DATE__, MACHINE
 };
 
 /*
