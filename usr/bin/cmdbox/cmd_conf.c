@@ -56,6 +56,7 @@ extern int sync_main(int argc, char *argv[]);
 extern int test_main(int argc, char *argv[]);
 extern int touch_main(int argc, char *argv[]);
 extern int uname_main(int argc, char *argv[]);
+extern int yes_main(int argc, char *argv[]);
 extern int null_main(int argc, char *argv[]);
 
 /*
@@ -137,6 +138,9 @@ const struct cmdentry builtin_cmds[] = {
 #endif
 #ifdef CONFIG_CMD_UNAME
 	{ "uname"    ,uname_main      },
+#endif
+#ifdef CONFIG_CMD_YES
+	{ "yes"      ,yes_main        },
 #endif
 	{ NULL       ,null_main       },
 };

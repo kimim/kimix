@@ -120,6 +120,7 @@ command 	sync
 #command 	test
 command 	touch
 command 	uname
+command 	yes
 
 #
 # Adminisrative tools

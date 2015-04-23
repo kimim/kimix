@@ -28,5 +28,6 @@ include $(CURDIR)/sync/Makefile.inc
 include $(CURDIR)/test/Makefile.inc
 include $(CURDIR)/touch/Makefile.inc
 include $(CURDIR)/uname/Makefile.inc
+include $(CURDIR)/yes/Makefile.inc
 
 include $(SRCDIR)/mk/prog.mk
