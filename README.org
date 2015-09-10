@@ -5,5 +5,5 @@ An open source, royalty-free, real-time operating system for embedded systems de
 
 #+BEGIN_SRC sh
 export PATH=~/cross-arm-eabi/bin/:$PATH
-./configure --target=arm-integrator --prefix=arm-eabi-
+./configure --target=arm-integrator --cross-prefix=arm-eabi-
 #+END_SRC
