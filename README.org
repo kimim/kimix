@@ -1,0 +1,9 @@
+* kimix
+An open source, royalty-free, real-time operating system for embedded systems derived from Prex
+
+* Compiling & Running
+
+#+BEGIN_SRC sh
+export PATH=~/cross-arm-eabi/bin/:$PATH
+./configure --target=arm-integrator --prefix=arm-eabi-
+#+END_SRC
