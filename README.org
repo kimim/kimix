@@ -7,3 +7,36 @@ An open source, royalty-free, real-time operating system for embedded systems de
 export PATH=~/cross-arm-eabi/bin/:$PATH
 ./configure --target=arm-integrator --cross-prefix=arm-eabi-
 #+END_SRC
+
+* Debug config
+
+mk/own.mk::27
+#+BEGIN_SRC makefile
+_DEBUG_:=	1
+#+END_SRC
+
+* Stack allocation
+kimix/conf/config.h::9
+#+BEGIN_SRC c
+#define CONFIG_SYSPAGE_BASE 0x80000000
+#+END_SRC
+
+kimix/include/arm/syspage.h::75
+#+BEGIN_SRC c
+#define INTSTK		(SYSPAGE + 0x1000)
+#+END_SRC
+
+kimix/include/arm/syspage.h::93
+#+BEGIN_SRC c
+#define INTSTKSZ	0x1000
+#define INTSTKTOP	(INTSTK + INTSTKSZ)
+#+END_SRC
+
+conclusion:
+
+INITSTKTOP = 0x80000000 + 0x1000 + 0x1000 = 0x80002000
+
+boot stack = 0x80003800
+#+BEGIN_SRC c
+#define BOOTSTK		(SYSPAGE + 0x3800)
+#+END_SRC
