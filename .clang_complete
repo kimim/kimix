@@ -1,0 +1,6 @@
+-DDEBUG
+-Iinclude
+-Iinclude/sys
+-Ibsp/drv/include
+-Isys/include
+-Iusr/include
