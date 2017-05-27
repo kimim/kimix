@@ -5,7 +5,7 @@
 #
 # Make options
 #
-makeoptions	GCCFLAGS+= -mcpu=cortex-a7 -fno-dwarf2-cfi-asm
+makeoptions	GCCFLAGS+= -mcpu=arm1176jzf-s -fno-dwarf2-cfi-asm
 makeoptions	ASFLAGS+= -mfpu=softfpa
 
 #
@@ -28,7 +28,7 @@ options 	FS_THREADS=4	# Number of file system threads
 #
 # Platform settings
 #
-options		CORTEXA7	# Processor core
+options		ARM1176JZF	# Processor core
 options 	MMU		# Memory management unit
 options 	CACHE		# Cache memory
 #options 	FPU		# Floating point unit

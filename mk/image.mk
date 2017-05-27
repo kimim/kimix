@@ -2,7 +2,7 @@
 
 include $(SRCDIR)/mk/own.mk
 
-TARGET:=	$(SRCDIR)/prexos
+TARGET:=	$(SRCDIR)/kernel.img
 LOADER:=	$(SRCDIR)/bsp/boot/bootldr
 DRIVER:=	$(SRCDIR)/bsp/drv/drv.ko
 KERNEL:=	$(SRCDIR)/sys/prex
