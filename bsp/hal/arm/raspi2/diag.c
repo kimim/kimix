@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2005-2009, Kohsuke Ohtani
+ * Copyright (c) 2008, Kohsuke Ohtani
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,81 +28,47 @@
  */
 
 /*
- * main.c - Boot loader main module.
+ * diag.c - diagnostic message support
  */
 
-#include <boot.h>
-#include <machdep.h>
 #include <sys/bootinfo.h>
-#include "load.h"
+#include <kernel.h>
+#include <cpufunc.h>
 
-typedef void (*entry_t)(void);
+#include "platform.h"
 
-/*
- * Loader main routine
- *
- * We assume that the following machine state has
- * been already set before this routine.
- *	- CPU is initialized.
- *	- DRAM is configured.
- *	- Loader BSS section is filled with 0.
- *	- Loader stack is configured.
- *	- All interrupts are disabled.
- */
-int
-main(void)
+#define UART_FR		(*(volatile uint32_t *)(UART_BASE + 0x18))
+#define UART_DR		(*(volatile uint32_t *)(UART_BASE + 0x00))
+
+/* Flag register */
+#define FR_RXFE		0x10	/* Receive FIFO empty */
+#define FR_TXFF		0x20	/* Transmit FIFO full */
+
+static void
+serial_putc(char c)
 {
-	entry_t entry;
 
-	memset(bootinfo, 0, BOOTINFOSZ);
-
-	/*
-	 * Initialize debug port.
-	 */
-	debug_init();
-	DPRINTF(("Kimix Boot Loader\n"));
-
-	/*
-	 * Do platform dependent initialization.
-	 */
-	startup();
-
-	/*
-	 * Show splash screen.
-	 */
-	splash();
-
-	/*
-	 * Load OS modules to appropriate locations.
-	 */
-	load_os();
-
-	/*
-	 * Dump boot infomation for debug.
-	 */
-	dump_bootinfo();
-
-	/*
-	 * Launch kernel.
-	 */
-	entry = (entry_t)kvtop(bootinfo->kernel.entry);
-	DPRINTF(("Entering kernel (at 0x%lx) ...\n\n", (long)entry));
-	(*entry)();
-
-	panic("Oops!");
-	/* NOTREACHED */
-	return 0;
+	while (UART_FR & FR_TXFF)
+		;
+	UART_DR = (uint32_t)c;
 }
 
-/*
- * panic - show error message and hang up.
- */
 void
-panic(const char *msg)
+diag_puts(char *buf)
 {
 
-	DPRINTF(("Panic: %s\n", msg));
+	while (*buf) {
+		if (*buf == '\n')
+			serial_putc('\r');
+		serial_putc(*buf++);
+	}
+}
 
-	for (;;) ;
-	/* NOTREACHED */
+void
+diag_init(void)
+{
+
+#ifdef CONFIG_MMU
+	mmu_premap(0x16000000, UART_BASE);
+#endif
 }

@@ -1,5 +1,5 @@
-/*-
- * Copyright (c) 2005-2009, Kohsuke Ohtani
+/*
+ * Copyright (c) 2008, Kohsuke Ohtani
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,82 +27,21 @@
  * SUCH DAMAGE.
  */
 
-/*
- * main.c - Boot loader main module.
- */
+#ifndef _INTEGRATOR_PLATFORM_H
+#define _INTEGRATOR_PLATFORM_H
 
-#include <boot.h>
-#include <machdep.h>
-#include <sys/bootinfo.h>
-#include "load.h"
+/* number of interrupt vectors */
+#define NIRQS		29
 
-typedef void (*entry_t)(void);
+#ifdef CONFIG_MMU
+#define CM_IOMEM_BASE	0xc0000000
+#else
+#define CM_IOMEM_BASE	0
+#endif
 
-/*
- * Loader main routine
- *
- * We assume that the following machine state has
- * been already set before this routine.
- *	- CPU is initialized.
- *	- DRAM is configured.
- *	- Loader BSS section is filled with 0.
- *	- Loader stack is configured.
- *	- All interrupts are disabled.
- */
-int
-main(void)
-{
-	entry_t entry;
+#define FPGA_BASE	(CM_IOMEM_BASE + 0x10000000)
+#define TIMER_BASE	(CM_IOMEM_BASE + 0x13000000)
+#define ICU_BASE	(CM_IOMEM_BASE + 0x14000000)
+#define UART_BASE	(CM_IOMEM_BASE + 0x16000000)
 
-	memset(bootinfo, 0, BOOTINFOSZ);
-
-	/*
-	 * Initialize debug port.
-	 */
-	debug_init();
-	DPRINTF(("Kimix Boot Loader\n"));
-
-	/*
-	 * Do platform dependent initialization.
-	 */
-	startup();
-
-	/*
-	 * Show splash screen.
-	 */
-	splash();
-
-	/*
-	 * Load OS modules to appropriate locations.
-	 */
-	load_os();
-
-	/*
-	 * Dump boot infomation for debug.
-	 */
-	dump_bootinfo();
-
-	/*
-	 * Launch kernel.
-	 */
-	entry = (entry_t)kvtop(bootinfo->kernel.entry);
-	DPRINTF(("Entering kernel (at 0x%lx) ...\n\n", (long)entry));
-	(*entry)();
-
-	panic("Oops!");
-	/* NOTREACHED */
-	return 0;
-}
-
-/*
- * panic - show error message and hang up.
- */
-void
-panic(const char *msg)
-{
-
-	DPRINTF(("Panic: %s\n", msg));
-
-	for (;;) ;
-	/* NOTREACHED */
-}
+#endif /* !_INTEGRATOR_PLATFORM_H */

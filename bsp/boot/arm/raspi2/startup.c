@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2005-2009, Kohsuke Ohtani
+ * Copyright (c) 2008-2009, Kohsuke Ohtani
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,82 +27,37 @@
  * SUCH DAMAGE.
  */
 
-/*
- * main.c - Boot loader main module.
- */
-
-#include <boot.h>
-#include <machdep.h>
+#include <sys/param.h>
 #include <sys/bootinfo.h>
-#include "load.h"
-
-typedef void (*entry_t)(void);
+#include <boot.h>
 
 /*
- * Loader main routine
- *
- * We assume that the following machine state has
- * been already set before this routine.
- *	- CPU is initialized.
- *	- DRAM is configured.
- *	- Loader BSS section is filled with 0.
- *	- Loader stack is configured.
- *	- All interrupts are disabled.
+ * Setup boot information.
  */
-int
-main(void)
+static void
+bootinfo_init(void)
 {
-	entry_t entry;
-
-	memset(bootinfo, 0, BOOTINFOSZ);
+	struct bootinfo *bi = bootinfo;
 
 	/*
-	 * Initialize debug port.
+	 * Screen size
 	 */
-	debug_init();
-	DPRINTF(("Kimix Boot Loader\n"));
+	bi->video.text_x = 80;
+	bi->video.text_y = 25;
 
 	/*
-	 * Do platform dependent initialization.
+	 * On-board SSRAM - 4M
 	 */
-	startup();
+	bi->ram[0].base = 0;
+	bi->ram[0].size = 0x400000;
+	bi->ram[0].type = MT_USABLE;
 
-	/*
-	 * Show splash screen.
-	 */
-	splash();
-
-	/*
-	 * Load OS modules to appropriate locations.
-	 */
-	load_os();
-
-	/*
-	 * Dump boot infomation for debug.
-	 */
-	dump_bootinfo();
-
-	/*
-	 * Launch kernel.
-	 */
-	entry = (entry_t)kvtop(bootinfo->kernel.entry);
-	DPRINTF(("Entering kernel (at 0x%lx) ...\n\n", (long)entry));
-	(*entry)();
-
-	panic("Oops!");
-	/* NOTREACHED */
-	return 0;
+	bi->nr_rams = 1;
 }
 
-/*
- * panic - show error message and hang up.
- */
 void
-panic(const char *msg)
+startup(void)
 {
 
-	DPRINTF(("Panic: %s\n", msg));
-
-	for (;;) ;
-	/* NOTREACHED */
+	bootinfo_init();
 }
