@@ -2,7 +2,7 @@
 
 include $(SRCDIR)/mk/own.mk
 
-TARGET:=	prex
+TARGET:=	kimix
 
 #MAP:=		prex.map
 #DISASM:= 	prex.lst

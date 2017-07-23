@@ -59,10 +59,12 @@ start_vector:
 	.code 16
 thumb_mode:
 
+    	bl	main
+/*	cannot work with raspi2 2017-07-23
 	ldr	r0, =main
 	bx	r0			/* Change to ARM mode */
 
-	.section .tail,"ax"
+    	.section .tail,"ax"
 dummy:
 	.byte	0xff
 

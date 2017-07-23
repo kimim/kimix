@@ -2,10 +2,10 @@
 
 include $(SRCDIR)/mk/own.mk
 
-TARGET:=	$(SRCDIR)/kernel.img
+TARGET:=	$(SRCDIR)/kimixos
 LOADER:=	$(SRCDIR)/bsp/boot/bootldr
 DRIVER:=	$(SRCDIR)/bsp/drv/drv.ko
-KERNEL:=	$(SRCDIR)/sys/prex
+KERNEL:=	$(SRCDIR)/sys/kimix
 
 include $(SRCDIR)/conf/etc/tasks.mk
 include $(SRCDIR)/conf/etc/files.mk

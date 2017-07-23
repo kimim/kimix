@@ -1,1 +1,1 @@
-qemu-system-arm -machine integratorcp -m 128 -kernel prexos -nographic
+qemu-system-arm -machine integratorcp -m 128 -kernel kimixos -nographic
