@@ -3,7 +3,14 @@ An open source, royalty-free, real-time operating system for embedded systems de
 
 * Compiling & Running
 
+integrator:
 #+BEGIN_SRC sh
 export PATH=~/cross-arm-eabi/bin/:$PATH
 ./configure --target=arm-integrator --cross-prefix=arm-eabi-
+#+END_SRC
+
+raspberry pi 2:
+#+BEGIN_SRC sh
+export PATH=~/cross-arm-eabi/bin/:$PATH
+./configure --target=arm-raspi2 --cross-prefix=arm-eabi-
 #+END_SRC
