@@ -399,7 +399,8 @@ task_capable(cap_t cap)
 }
 
 /*
- * Return true if the specified task is valid.
+ * Return true if the specified task is valid. valid means task is in the task
+ * list.
  */
 int
 task_valid(task_t task)

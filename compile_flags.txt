@@ -1,0 +1,8 @@
+-I
+.
+-I
+include/
+-I
+sys/include/
+-D
+__arm__
