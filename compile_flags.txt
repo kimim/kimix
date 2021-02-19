@@ -4,5 +4,7 @@
 include/
 -I
 sys/include/
+-I
+usr/include/
 -D
 __arm__
